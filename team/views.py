@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Count
@@ -44,4 +44,38 @@ def create_team_member(request):
             messages.error(request, f'Error adding team member: {str(e)}')
             return redirect('team:team')
 
+    return redirect('team:team')
+
+@login_required
+def update_team_member(request, pk):
+    member = get_object_or_404(TeamMember, pk=pk)
+    if request.method == 'POST':
+        full_name = request.POST.get('employeeName')
+        employee_id = request.POST.get('employeeId')
+        designation = request.POST.get('designation')
+        department = request.POST.get('department')
+
+        if not all([full_name, employee_id, designation]):
+            messages.error(request, 'Please fill all required fields.')
+            return redirect('team:team')
+
+        try:
+            member.full_name = full_name
+            member.employee_id = employee_id
+            member.designation = designation
+            member.department = department if department else None
+            member.save()
+            messages.success(request, 'Team member updated successfully!')
+            return redirect('team:team')
+        except Exception as e:
+            messages.error(request, f'Error updating team member: {str(e)}')
+            return redirect('team:team')
+
+    return redirect('team:team')
+
+@login_required
+def delete_team_member(request, pk):
+    member = get_object_or_404(TeamMember, pk=pk)
+    member.delete()
+    messages.success(request, 'Team member deleted successfully!')
     return redirect('team:team')

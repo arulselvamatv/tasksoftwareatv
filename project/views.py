@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Project
@@ -20,7 +20,7 @@ def create_project(request):
         category = request.POST.get('category')
         status = request.POST.get('status')
         manager_input = request.POST.get('projectManager')
-        team_members_input = request.POST.getlist('teamMembers')  # Changed to getlist
+        team_members_input = request.POST.getlist('teamMembers')
         attachment = request.FILES.get('attachment')
 
         if not all([title, category, status, manager_input]):
@@ -51,4 +51,55 @@ def create_project(request):
             messages.error(request, f'Error creating project: {str(e)}')
             return redirect('project:project_list')
 
+    return redirect('project:project_list')
+
+@login_required
+def update_project(request, pk):
+    project = get_object_or_404(Project, pk=pk)
+    if request.method == 'POST':
+        title = request.POST.get('projectTitle')
+        description = request.POST.get('projectDescription', '')
+        category = request.POST.get('category')
+        status = request.POST.get('status')
+        manager_input = request.POST.get('projectManager')
+        team_members_input = request.POST.getlist('teamMembers')
+        attachment = request.FILES.get('attachment')
+
+        if not all([title, category, status, manager_input]):
+            messages.error(request, 'Please fill all required fields.')
+            return redirect('project:project_list')
+
+        try:
+            manager = CustomUser.objects.get(username=manager_input)
+            project.title = title
+            project.description = description
+            project.category = category
+            project.status = status
+            project.manager = manager
+            if attachment:
+                project.attachment = attachment
+            project.save()
+
+            # Clear existing team members and add new ones
+            project.team_members.clear()
+            if team_members_input:
+                users = CustomUser.objects.filter(username__in=team_members_input)
+                project.team_members.add(*users)
+
+            messages.success(request, 'Project updated successfully!')
+            return redirect('project:project_list')
+        except CustomUser.DoesNotExist:
+            messages.error(request, 'Invalid project manager or team member.')
+            return redirect('project:project_list')
+        except Exception as e:
+            messages.error(request, f'Error updating project: {str(e)}')
+            return redirect('project:project_list')
+
+    return redirect('project:project_list')
+
+@login_required
+def delete_project(request, pk):
+    project = get_object_or_404(Project, pk=pk)
+    project.delete()
+    messages.success(request, 'Project deleted successfully!')
     return redirect('project:project_list')

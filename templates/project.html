@@ -40,7 +40,7 @@
         .glass-effect {
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(10px);
-            border: 1 voulons solid rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.18);
         }
         .gradient-bg {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -80,7 +80,6 @@
                         <sup
                             class="absolute -top-1 -right-1 bg-danger text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">2</sup>
                     </button>
-
                     <!-- Notifications Dropdown -->
                     <div id="notificationsMenu"
                         class="hidden absolute right-0 mt-3 w-96 bg-white rounded-2xl shadow-premium py-4 z-50 border border-gray-100 overflow-y-auto max-h-96 overflow-x-hidden">
@@ -188,54 +187,41 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Profile Menu -->
                 <div class="relative">
-                    <button id="profileBtn"
-                        class="flex items-center space-x-3 focus:outline-none hover:bg-white/20 rounded-xl px-4 py-2 transition-all duration-200">
-                        <div
-                            class="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center shadow-lg">
+                    <button id="profileBtn" class="flex items-center space-x-3 focus:outline-none hover:bg-white/20 rounded-xl px-4 py-2 transition-all duration-200">
+                        <div class="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center shadow-lg">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                             </svg>
                         </div>
                         <div class="hidden sm:block text-left">
-                            <p class="text-sm font-semibold text-dark">John Doe</p>
+                            <p class="text-sm font-semibold text-dark">{{ request.user.get_full_name|default:request.user.username }}</p>
                             <p class="text-xs text-gray-600">Administrator</p>
                         </div>
-                        <svg class="w-4 h-4 text-gray-600 hidden sm:block" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
-                            </path>
+                        <svg class="w-4 h-4 text-gray-600 hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
-
-                    <!-- Profile Dropdown -->
-                    <div id="profileMenu"
-                        class="hidden absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-premium py-2 z-50 border border-gray-100">
+                    <div id="profileMenu" class="hidden absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-premium py-2 z-50 border border-gray-100">
                         <div class="px-4 py-3 border-b border-gray-100">
-                            <p class="text-sm font-semibold text-dark">John Doe</p>
-                            <p class="text-xs text-gray-500">john.doe@promanage.com</p>
+                            <p class="text-sm font-semibold text-dark">{{ request.user.get_full_name|default:request.user.username }}</p>
+                            <p class="text-xs text-gray-500">{{ request.user.email }}</p>
                         </div>
-                        <a href="{% url 'authentication:profile_settings' %}"
-                            class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
+                        <a href="{% url 'authentication:profile_settings' %}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
                             <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                             </svg>
                             Profile Settings
                         </a>
-                        <a href="{% url 'authentication:logout' %}"
-                            class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
+                        <a href="{% url 'authentication:logout' %}" class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
                             <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
-                                </path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                             </svg>
                             Sign Out
                         </a>
                     </div>
+            
         </div>
     </nav>
     <aside id="sidebar" class="fixed left-0 top-20 bottom-0 w-72 glass-effect transform -translate-x-full transition-all duration-300 ease-in-out z-40 border-r border-white/20">
@@ -297,7 +283,7 @@
             {% if messages %}
             <div class="mb-6">
                 {% for message in messages %}
-                <div class="bg-{% if message.tags == 'error' %}danger{% else %}success{% endif %}/10 text-{% if message.tags == 'error' %}danger{% else %}success{% endif %} px-4 py-3 rounded-2xl">
+                <div id="django-message" class="bg-{% if message.tags == 'error' %}danger{% else %}success{% endif %}/10 text-{% if message.tags == 'error' %}danger{% else %}success{% endif %} px-4 py-3 rounded-2xl">
                     {{ message }}
                 </div>
                 {% endfor %}
@@ -327,7 +313,7 @@
             <div id="projectForm" class="hidden mb-8">
                 <div class="bg-white rounded-3xl shadow-premium p-8 border border-gray-100">
                     <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-2xl font-bold text-dark">Create New Project</h2>
+                        <h2 id="formTitle" class="text-2xl font-bold text-dark">Create New Project</h2>
                         <button id="closeFormBtn" class="text-gray-400 hover:text-gray-600 transition-colors">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -336,6 +322,7 @@
                     </div>
                     <form id="addProjectForm" action="{% url 'project:create_project' %}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         {% csrf_token %}
+                        <input type="hidden" id="projectId" name="projectId" value="">
                         <div class="space-y-2">
                             <label class="block text-sm font-semibold text-dark">Project Title</label>
                             <input type="text" id="projectTitle" name="projectTitle" placeholder="Enter project name" class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all duration-200" required>
@@ -386,7 +373,7 @@
                         </div>
                         <div class="lg:col-span-2 flex justify-end space-x-4 pt-4">
                             <button type="button" id="cancelProject" class="px-6 py-3 rounded-2xl border border-gray-200 text-gray-600 hover:bg-gray-50 transition-all duration-200 font-medium">Cancel</button>
-                            <button type="submit" class="bg-gradient-to-r from-primary to-secondary text-white px-8 py-3 rounded-2xl hover:shadow-premium transition-all duration-200 font-medium">Create Project</button>
+                            <button type="submit" id="submitBtn" class="bg-gradient-to-r from-primary to-secondary text-white px-8 py-3 rounded-2xl hover:shadow-premium transition-all duration-200 font-medium">Create Project</button>
                         </div>
                     </form>
                 </div>
@@ -401,14 +388,21 @@
                             <th class="px-8 py-5 text-left text-sm font-bold text-dark uppercase tracking-wider">Manager</th>
                             <th class="px-8 py-5 text-left text-sm font-bold text-dark uppercase tracking-wider">Team</th>
                             <th class="px-8 py-5 text-left text-sm font-bold text-dark uppercase tracking-wider">Status</th>
+                            <th class="px-8 py-5 text-left text-sm font-bold text-dark uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
                     <tbody id="projectsGrid">
                         {% for project in projects %}
-                        <tr class="hover:bg-gray-50 border-b border-gray-100 last:border-b-0">
+                        <tr class="hover:bg-gray-50 border-b border-gray-100 last:border-b-0" 
+                            data-project-id="{{ project.id }}"
+                            data-title="{{ project.title }}"
+                            data-description="{{ project.description|default:'' }}"
+                            data-manager-username="{{ project.manager.username }}"
+                            data-team-members="{% for member in project.team_members.all %}{{ member.username }}{% if not forloop.last %},{% endif %}{% empty %} {% endfor %}"
+                            data-status="{{ project.status }}"
+                            data-category="{{ project.category }}">
                             <td class="px-8 py-5 whitespace-nowrap">
                                 <div class="flex items-center">
-
                                     <div>
                                         <div class="text-sm font-medium text-dark">{{ project.title }}</div>
                                     </div>
@@ -434,10 +428,22 @@
                             <td class="px-8 py-5 whitespace-nowrap">
                                 <span class="px-3 py-1 {% if project.status == 'Planning' %}bg-warning/10 text-warning{% elif project.status == 'In Progress' or project.status == 'Completed' %}bg-success/10 text-success{% elif project.status == 'Review' %}bg-accent/10 text-accent{% else %}bg-gray-100 text-gray-800{% endif %} text-xs font-semibold rounded-full">{{ project.status }}</span>
                             </td>
+                            <td class="px-8 py-5 whitespace-nowrap text-sm font-medium">
+                                <button class="editProjectBtn text-primary hover:text-primary/80 p-1 rounded-md mr-2" title="Edit project" data-project-id="{{ project.id }}">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                    </svg>
+                                </button>
+                                <button class="deleteProjectBtn text-danger hover:text-danger/80 p-1 rounded-md" title="Delete project" data-project-id="{{ project.id }}">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </button>
+                            </td>
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="6" class="px-8 py-5 text-center text-sm text-gray-500">No projects available.</td>
+                            <td colspan="7" class="px-8 py-5 text-center text-sm text-gray-500">No projects available.</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -451,22 +457,79 @@
         const closeFormBtn = document.getElementById('closeFormBtn');
         const cancelProjectBtn = document.getElementById('cancelProject');
         const form = document.getElementById('projectForm');
+        const formTitle = document.getElementById('formTitle');
+        const submitBtn = document.getElementById('submitBtn');
+        const addProjectForm = document.getElementById('addProjectForm');
+        const projectIdInput = document.getElementById('projectId');
+
+        let currentMode = 'add'; // 'add' or 'edit'
 
         // Form functionality
-        function showForm() {
+        function showAddForm() {
+            currentMode = 'add';
+            formTitle.textContent = 'Create New Project';
+            submitBtn.textContent = 'Create Project';
+            addProjectForm.action = "{% url 'project:create_project' %}";
+            projectIdInput.value = '';
+            addProjectForm.reset();
+            form.classList.remove('hidden');
+            form.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showEditForm(projectId) {
+            currentMode = 'edit';
+            formTitle.textContent = 'Edit Project';
+            submitBtn.textContent = 'Update Project';
+            const row = document.querySelector(`tr[data-project-id="${projectId}"]`);
+            if (row) {
+                projectIdInput.value = projectId;
+                document.getElementById('projectTitle').value = row.dataset.title;
+                document.getElementById('projectDescription').value = row.dataset.description;
+                document.getElementById('status').value = row.dataset.status;
+                document.getElementById('category').value = row.dataset.category;
+
+                // Set manager
+                document.getElementById('projectManager').value = row.dataset.managerUsername;
+
+                // Set team members (multiple select)
+                const teamMembersStr = row.dataset.teamMembers;
+                const teamMembersArray = teamMembersStr ? teamMembersStr.split(',').map(m => m.trim()) : [];
+                const teamSelect = document.getElementById('teamMembers');
+                for (let option of teamSelect.options) {
+                    option.selected = teamMembersArray.includes(option.value);
+                }
+            }
+            addProjectForm.action = "{% url 'project:update_project' 0 %}".replace('0', projectId);
             form.classList.remove('hidden');
             form.scrollIntoView({ behavior: 'smooth' });
         }
 
         function hideForm() {
             form.classList.add('hidden');
-            document.getElementById('addProjectForm').reset();
+            if (currentMode === 'add') {
+                addProjectForm.reset();
+            }
+            projectIdInput.value = '';
         }
 
         // Event listeners for form
-        if (toggleBtn) toggleBtn.addEventListener('click', showForm);
+        if (toggleBtn) toggleBtn.addEventListener('click', showAddForm);
         if (closeFormBtn) closeFormBtn.addEventListener('click', hideForm);
         if (cancelProjectBtn) cancelProjectBtn.addEventListener('click', hideForm);
+
+        // Edit and Delete buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.editProjectBtn')) {
+                const projectId = e.target.closest('.editProjectBtn').dataset.projectId;
+                showEditForm(projectId);
+            }
+            if (e.target.closest('.deleteProjectBtn')) {
+                const projectId = e.target.closest('.deleteProjectBtn').dataset.projectId;
+                if (confirm('Are you sure you want to delete this project?')) {
+                    window.location.href = "{% url 'project:delete_project' 0 %}".replace('0', projectId);
+                }
+            }
+        });
 
         // Sidebar functionality
         const hamburgerBtn = document.getElementById('hamburgerBtn');
@@ -498,9 +561,23 @@
         const profileMenu = document.getElementById('profileMenu');
 
         profileBtn.addEventListener('click', () => profileMenu.classList.toggle('hidden'));
-        document.addEventListener('click', (e) => {
-            if (!profileBtn.contains(e.target) && !profileMenu.contains(e.target)) profileMenu.classList.add('hidden');
-        });
+        // Notifications Menu Toggle
+        const notificationsBtn = document.getElementById('notificationsBtn');
+        const notificationsMenu = document.getElementById('notificationsMenu');
+
+        notificationsBtn.addEventListener('click', () => {
+            notificationsMenu.classList.toggle('hidden');
+        });
+       document.addEventListener('click', (e) => {
+            // Profile
+            if (!profileBtn.contains(e.target) && !profileMenu.contains(e.target)) {
+                profileMenu.classList.add('hidden');
+            }
+            // Notifications
+            if (!notificationsBtn.contains(e.target) && !notificationsMenu.contains(e.target)) {
+                notificationsMenu.classList.add('hidden');
+            }
+        });
 
         // Search functionality
         const searchInput = document.getElementById('searchProjects');
@@ -508,10 +585,21 @@
             const searchTerm = this.value.toLowerCase();
             const rows = document.querySelectorAll('#projectsGrid tr');
             rows.forEach(row => {
-                const title = row.querySelector('td:first-child div.text-sm').textContent.toLowerCase();
-                row.style.display = title.includes(searchTerm) ? '' : 'none';
+                if (row.dataset.projectId) { // Skip empty row
+                    const title = row.querySelector('td:first-child div.text-sm').textContent.toLowerCase();
+                    row.style.display = title.includes(searchTerm) ? '' : 'none';
+                }
             });
+            
         });
+          setTimeout(() => {
+        const msg = document.getElementById('django-message');
+        if (msg) {
+            msg.style.opacity = '0';
+            setTimeout(() => msg.remove(), 500); // fade out then remove
+        }
+    }, 2000); // 2 seconds
+        
     </script>
 </body>
 </html>
