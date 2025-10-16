@@ -347,11 +347,19 @@
                         <div class="flex items-center space-x-2 bg-white rounded-2xl px-4 py-2 shadow-card">
                             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
                             <input type="text" placeholder="Search tasks..."
-                                class="bg-transparent border-none outline-none text-sm w-48">
+                            class="bg-transparent border-none outline-none text-sm w-48">
                         </div>
+                        <button id="taskToggleBtn"
+                          class="bg-gradient-to-r from-accent to-cyan-600 text-white px-6 py-3 rounded-2xl hover:shadow-premium transition-all duration-200 flex items-center space-x-2 font-medium">
+                          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                          </svg>
+                          <span>New Task</span>
+                      </button>
                         <a href="{% url 'tasks:task_list' %}"
                             class="inline-flex items-center px-3 py-2 rounded-xl bg-white shadow-card hover:bg-gray-100 transition-all">
                             <svg class="w-5 h-5 text-dark mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -363,7 +371,60 @@
                     </div>
                 </div>
             </div>
+                 <div id="taskForm" class="hidden mb-8">
+                    <div class="bg-white rounded-3xl shadow-premium p-8 border border-gray-100 mt-5">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-2xl font-bold text-dark">Create New Task</h2>
+                            <button id="closeFormBtn" class="text-gray-400 hover:text-gray-600 transition-colors">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <form id="addTaskForm" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="block text-sm font-semibold text-dark">Task Title</label>
+                                <input type="text" id="taskTitle" placeholder="Enter task title"
+                                    class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-200">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="block text-sm font-semibold text-dark">Assignee</label>
+                                <input type="text" id="assignee" placeholder="Assign to team member"
+                                    class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-200">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="block text-sm font-semibold text-dark">Priority</label>
+                                <select id="priority"
+                                    class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-200 bg-white">
+                                    <option value="">Select Priority</option>
+                                    <option value="Low">Low</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="High">High</option>
+                                    <option value="Critical">Critical</option>
+                                </select>
+                            </div>
+                            <div class="lg:col-span-1 space-y-2">
+                                <label class="block text-sm font-semibold text-dark">Attachment</label>
+                                <input type="file" id="attachment"
+                                    class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all duration-200">
+                            </div>
 
+                            <div class="lg:col-span-2 space-y-2">
+                                <label class="block text-sm font-semibold text-dark">Description</label>
+                                <textarea id="taskDescription" rows="3" placeholder="Task description and requirements"
+                                    class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-200 resize-none"></textarea>
+                            </div>
+                            <div class="lg:col-span-2 flex justify-end space-x-4 pt-4">
+                                <button type="button" id="cancelTask"
+                                    class="px-6 py-3 rounded-2xl border border-gray-200 text-gray-600 hover:bg-gray-50 transition-all duration-200 font-medium">Cancel</button>
+                                <button type="button" id="saveTask"
+                                    class="bg-gradient-to-r from-accent to-cyan-600 text-white px-8 py-3 rounded-2xl hover:shadow-premium transition-all duration-200 font-medium">Create
+                                    Task</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             <!-- Kanban Board -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <!-- To Do Column -->
@@ -824,7 +885,24 @@
         if (sidebarOverlay) {
             sidebarOverlay.addEventListener('click', closeSidebar);
         }
+        const taskToggleBtn = document.getElementById('taskToggleBtn');
+        const closeFormBtn = document.getElementById('closeFormBtn');
+        const cancelTaskBtn = document.getElementById('cancelTask');
+        const taskForm = document.getElementById('taskForm');
 
+        function showForm() {
+            taskForm.classList.remove('hidden');
+            taskForm.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function hideForm() {
+            taskForm.classList.add('hidden');
+            document.getElementById('addTaskForm').reset();
+        }
+
+        if (taskToggleBtn) taskToggleBtn.addEventListener('click', showForm);
+        if (closeFormBtn) closeFormBtn.addEventListener('click', hideForm);
+        if (cancelTaskBtn) cancelTaskBtn.addEventListener('click', hideForm);
         // Profile Menu
         const profileBtn = document.getElementById('profileBtn');
         const profileMenu = document.getElementById('profileMenu');

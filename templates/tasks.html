@@ -389,6 +389,48 @@
                     </div>
                 </div>
             </div>
+            <div id="taskForm" class="hidden mb-8">
+                <div class="bg-white rounded-3xl shadow-premium p-8 border border-gray-100 mt-5">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-2xl font-bold text-dark">Create New Task</h2>
+                        <button id="closeFormBtn" class="text-gray-400 hover:text-gray-600 transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <form id="addTaskForm" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="block text-sm font-semibold text-dark">Project Name</label>
+                            <select id="priority"
+                                class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-200 bg-white">
+                                <option value="">Select Project</option>
+                                <option value="Texol">Texol</option>
+                                <option value="ITNT">ITNT</option>
+                                <option value="Letsfame">Letsfame</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-sm font-semibold text-dark">Frontend</label>
+                            <input type="text" id="taskTitle" placeholder="Enter task title"
+                                class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-200">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-sm font-semibold text-dark">Backend</label>
+                            <input type="text" id="assignee" placeholder="Assign to team member"
+                                class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-200">
+                        </div>
+                        <div class="lg:col-span-2 flex justify-end space-x-4 pt-4">
+                            <button type="button" id="cancelTask"
+                                class="px-6 py-3 rounded-2xl border border-gray-200 text-gray-600 hover:bg-gray-50 transition-all duration-200 font-medium">Cancel</button>
+                            <button type="button" id="saveTask"
+                                class="bg-gradient-to-r from-accent to-cyan-600 text-white px-8 py-3 rounded-2xl hover:shadow-premium transition-all duration-200 font-medium">Create
+                                Task</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
             <div>
                 <div>
                     <h1 class="text-3xl font-bold text-dark mb-4">Project Name</h1>
@@ -409,8 +451,9 @@
                                     <td class="px-6 py-4 text-gray-700">React, Tailwind</td>
                                     <td class="px-6 py-4">
                                         <a href="{% url 'todo:todo_list' %}"
-                                            class="px-3 py-1 text-xs font-semibold bg-yellow-100 text-yellow-800 rounded hover:bg-yellow-200 transition">View
-                                            Details</a>
+                                            class="bg-gradient-to-r from-accent to-cyan-600 text-white px-3 py-3 rounded-lg text-xs font-semibold hover:shadow-md transition-all duration-200 inline-flex items-center justify-center">
+                                            View Details
+                                        </a>
                                     </td>
                                 </tr>
                                 <tr class="border-b">
@@ -419,8 +462,9 @@
                                     <td class="px-6 py-4 text-gray-700">Vue.js, Bootstrap</td>
                                     <td class="px-6 py-4">
                                         <a href="{% url 'todo:todo_list' %}"
-                                            class="px-3 py-1 text-xs font-semibold bg-yellow-100 text-yellow-800 rounded hover:bg-yellow-200 transition">View
-                                            Details</a>
+                                            class="bg-gradient-to-r from-accent to-cyan-600 text-white px-3 py-3 rounded-lg text-xs font-semibold hover:shadow-md transition-all duration-200 inline-flex items-center justify-center">
+                                            View Details
+                                        </a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -429,97 +473,13 @@
                                     <td class="px-6 py-4 text-gray-700">Angular, Material UI</td>
                                     <td class="px-6 py-4">
                                         <a href="{% url 'todo:todo_list' %}"
-                                            class="px-3 py-1 text-xs font-semibold bg-yellow-100 text-yellow-800 rounded hover:bg-yellow-200 transition">View
-                                            Details</a>
+                                            class="bg-gradient-to-r from-accent to-cyan-600 text-white px-3 py-3 rounded-lg text-xs font-semibold hover:shadow-md transition-all duration-200 inline-flex items-center justify-center">
+                                            View Details
+                                        </a>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-                </div>
-                <div id="taskForm" class="hidden mb-8">
-                    <div class="bg-white rounded-3xl shadow-premium p-8 border border-gray-100 mt-5">
-                        <div class="flex items-center justify-between mb-6">
-                            <h2 class="text-2xl font-bold text-dark">Create New Task</h2>
-                            <button id="closeFormBtn" class="text-gray-400 hover:text-gray-600 transition-colors">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12"></path>
-                                </svg>
-                            </button>
-                        </div>
-                        <form id="addTaskForm" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <div class="space-y-2">
-                                <label class="block text-sm font-semibold text-dark">Priority</label>
-                                <select id="priority"
-                                    class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-200 bg-white">
-                                    <option value="">Select Priority</option>
-                                    <option value="Low">Low</option>
-                                    <option value="Medium">Medium</option>
-                                    <option value="High">High</option>
-                                    <option value="Critical">Critical</option>
-                                </select>
-                            </div>
-                            <div class="space-y-2">
-                                <label class="block text-sm font-semibold text-dark">Frontend</label>
-                                <input type="text" id="taskTitle" placeholder="Enter task title"
-                                    class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-200">
-                            </div>
-                            <div class="space-y-2">
-                                <label class="block text-sm font-semibold text-dark">Backend</label>
-                                <input type="text" id="assignee" placeholder="Assign to team member"
-                                    class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-200">
-                            </div>
-                            <div class="space-y-2">
-                                <label class="block text-sm font-semibold text-dark">Task Title</label>
-                                <input type="text" id="taskTitle" placeholder="Enter task title"
-                                    class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-200">
-                            </div>
-                            <div class="space-y-2">
-                                <label class="block text-sm font-semibold text-dark">Assignee</label>
-                                <input type="text" id="assignee" placeholder="Assign to team member"
-                                    class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-200">
-                            </div>
-                            <div class="space-y-2">
-                                <label class="block text-sm font-semibold text-dark">Priority</label>
-                                <select id="priority"
-                                    class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-200 bg-white">
-                                    <option value="">Select Priority</option>
-                                    <option value="Low">Low</option>
-                                    <option value="Medium">Medium</option>
-                                    <option value="High">High</option>
-                                    <option value="Critical">Critical</option>
-                                </select>
-                            </div>
-                            <div class="space-y-2">
-                                <label class="block text-sm font-semibold text-dark">Status</label>
-                                <select id="status"
-                                    class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-200 bg-white">
-                                    <option value="">Select Status</option>
-                                    <option value="To Do">To Do</option>
-                                    <option value="In Progress">In Progress</option>
-                                    <option value="Review">Review</option>
-                                    <option value="Done">Done</option>
-                                </select>
-                            </div>
-                            <div class="lg:col-span-2 space-y-2">
-                                <label class="block text-sm font-semibold text-dark">Description</label>
-                                <textarea id="taskDescription" rows="3" placeholder="Task description and requirements"
-                                    class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all duration-200 resize-none"></textarea>
-                            </div>
-                            <div class="lg:col-span-2 space-y-2">
-                                <label class="block text-sm font-semibold text-dark">Attachment</label>
-                                <input type="file" id="attachment"
-                                    class="w-full border border-gray-200 rounded-2xl px-4 py-3 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all duration-200">
-                            </div>
-                            <div class="lg:col-span-2 flex justify-end space-x-4 pt-4">
-                                <button type="button" id="cancelTask"
-                                    class="px-6 py-3 rounded-2xl border border-gray-200 text-gray-600 hover:bg-gray-50 transition-all duration-200 font-medium">Cancel</button>
-                                <button type="button" id="saveTask"
-                                    class="bg-gradient-to-r from-accent to-cyan-600 text-white px-8 py-3 rounded-2xl hover:shadow-premium transition-all duration-200 font-medium">Create
-                                    Task</button>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>
